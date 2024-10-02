@@ -75,4 +75,17 @@ public class TestCatFacts {
             .statusCode(HttpStatus.SC_OK);
     }
 
+    @Test
+    @DisplayName("Get list of breeds with an invalid limit")
+    public void getListOfBreedsWithAnInvalidLimit() {
+        String invalidLimit = "abc";
+        given()
+            .header(VALID_AUTHENTICATION_TOKEN_NAME, VALID_AUTHENTICATION_TOKEN_VALUE)
+            .queryParam(QUERY_PARAMETER_LIMIT, invalidLimit)
+        .when()
+            .get(URL_API_CAT_FACTS + ENDPOINT_BREEDS)
+        .then()
+            .statusCode(HttpStatus.SC_BAD_REQUEST);
+    }
+
 }
