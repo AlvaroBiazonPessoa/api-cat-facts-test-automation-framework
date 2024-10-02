@@ -101,4 +101,18 @@ public class TestCatFacts {
             .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
+    @Test
+    @DisplayName("Get list of breeds with the invalid limit parameter name")
+    public void getListOfBreedsWithTheInvalidLimitParameterName() {
+        String queryParameterLiimmiitt = "liimmiitt";
+        int liimmiitt = 2;
+        given()
+            .header(VALID_AUTHENTICATION_TOKEN_NAME, VALID_AUTHENTICATION_TOKEN_VALUE)
+            .queryParam(queryParameterLiimmiitt, liimmiitt)
+        .when()
+            .get(URL_API_CAT_FACTS + ENDPOINT_BREEDS)
+        .then()
+            .statusCode(HttpStatus.SC_BAD_REQUEST);
+    }
+
 }
