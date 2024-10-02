@@ -49,4 +49,17 @@ public class TestCatFacts {
             .body("data", not(equalTo(emptyBreedList)));
     }
 
+    @Test
+    @DisplayName("Get list of breeds with a valid limit")
+    public void getListOfBreedsWithAValidLimit() {
+        int validLimit = 2;
+        given()
+            .header(VALID_AUTHENTICATION_TOKEN_NAME, VALID_AUTHENTICATION_TOKEN_VALUE)
+            .queryParam(QUERY_PARAMETER_LIMIT, validLimit)
+        .when()
+            .get(URL_API_CAT_FACTS + ENDPOINT_BREEDS)
+        .then()
+            .statusCode(HttpStatus.SC_OK);
+    }
+
 }
