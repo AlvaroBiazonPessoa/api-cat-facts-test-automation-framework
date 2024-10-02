@@ -115,4 +115,17 @@ public class TestCatFacts {
             .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
 
+    @Test
+    @DisplayName("Get list of breeds with the invalid endpoint name")
+    public void getListOfBreedsWithTheInvalidEndpointName() {
+        String endpointBrreedss = "brreedss";
+        int liimmiitt = 2;
+        given()
+            .header(VALID_AUTHENTICATION_TOKEN_NAME, VALID_AUTHENTICATION_TOKEN_VALUE)
+        .when()
+            .get(URL_API_CAT_FACTS + endpointBrreedss)
+        .then()
+            .statusCode(HttpStatus.SC_NOT_FOUND);
+    }
+
 }
