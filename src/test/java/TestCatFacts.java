@@ -88,4 +88,17 @@ public class TestCatFacts {
             .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
 
+    @Test
+    @DisplayName("Get list of breeds with a negative limit value")
+    public void getListOfBreedsWithANegativeLimitValue() {
+        int negativeLimit = -2;
+        given()
+            .header(VALID_AUTHENTICATION_TOKEN_NAME, VALID_AUTHENTICATION_TOKEN_VALUE)
+            .queryParam(QUERY_PARAMETER_LIMIT, negativeLimit)
+        .when()
+            .get(URL_API_CAT_FACTS + ENDPOINT_BREEDS)
+        .then()
+            .statusCode(HttpStatus.SC_NOT_FOUND);
+    }
+
 }
