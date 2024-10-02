@@ -20,4 +20,17 @@ public class TestCatFacts {
         .then()
             .statusCode(HttpStatus.SC_UNAUTHORIZED);
     }
+
+    @Test
+    @DisplayName("Get list of breeds by providing invalid authentication credentials")
+    public void getListOfBreedsByProvidingInvalidAuthenticationCredentials() {
+        String invalidAuthenticationTokenName = "X-CSRF-TOKEN-FALSE";
+        String invalidAuthenticationTokenNameValue = "KqTRMzyCERr6njfNmmI2fGpW5otfuvL0IG1RB4th1008";
+        given()
+            .header(invalidAuthenticationTokenName, invalidAuthenticationTokenNameValue)
+        .when()
+            .get(URL_API_CAT_FACTS + ENDPOINT_BREEDS)
+        .then()
+            .statusCode(HttpStatus.SC_UNAUTHORIZED);
+    }
 }
