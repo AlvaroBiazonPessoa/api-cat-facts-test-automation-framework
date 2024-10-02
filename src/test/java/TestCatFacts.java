@@ -62,4 +62,17 @@ public class TestCatFacts {
             .statusCode(HttpStatus.SC_OK);
     }
 
+    @Test
+    @DisplayName("Get empty list of breeds")
+    public void getEmptyListOfBreeds() {
+        int limit = 2;
+        given()
+            .header(VALID_AUTHENTICATION_TOKEN_NAME, VALID_AUTHENTICATION_TOKEN_VALUE)
+            .queryParam(QUERY_PARAMETER_LIMIT, limit)
+        .when()
+            .get(URL_API_CAT_FACTS + ENDPOINT_BREEDS)
+        .then()
+            .statusCode(HttpStatus.SC_OK);
+    }
+
 }
