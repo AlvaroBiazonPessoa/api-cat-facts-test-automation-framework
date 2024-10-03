@@ -1,9 +1,14 @@
+import com.jayway.jsonpath.JsonPath;
+import io.restassured.internal.common.assertion.Assertion;
+import io.restassured.response.Response;
+import net.minidev.json.JSONArray;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestCatFacts {
 
@@ -53,13 +58,18 @@ public class TestCatFacts {
     @DisplayName("Get list of breeds with a valid limit")
     public void getListOfBreedsWithAValidLimit() {
         int validLimit = 2;
-        given()
+        Response response = (Response) given()
             .header(VALID_AUTHENTICATION_TOKEN_NAME, VALID_AUTHENTICATION_TOKEN_VALUE)
             .queryParam(QUERY_PARAMETER_LIMIT, validLimit)
         .when()
             .get(URL_API_CAT_FACTS + ENDPOINT_BREEDS)
         .then()
-            .statusCode(HttpStatus.SC_OK);
+            .statusCode(HttpStatus.SC_OK)
+            .extract().response();
+        String responseBody = response.getBody().asString();
+        JSONArray dataList = JsonPath.read(responseBody, "$.data");
+        int numberOfElementsInTheDataList = dataList.size();
+        assertEquals(validLimit, numberOfElementsInTheDataList);
     }
 
     @Test
