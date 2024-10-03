@@ -79,14 +79,19 @@ public class TestCatFacts {
     @Test
     @DisplayName("Get empty list of breeds")
     public void getEmptyListOfBreeds() {
-        int limit = 2;
-        given()
+        int limit = 0;
+        Response response = (Response) given()
             .header(VALID_AUTHENTICATION_TOKEN_NAME, VALID_AUTHENTICATION_TOKEN_VALUE)
             .queryParam(QUERY_PARAMETER_LIMIT, limit)
         .when()
             .get(URL_API_CAT_FACTS + ENDPOINT_BREEDS)
         .then()
-            .statusCode(HttpStatus.SC_OK);
+            .statusCode(HttpStatus.SC_OK)
+            .extract().response();
+        String responseBody = response.getBody().asString();
+        JSONArray dataList = JsonPath.read(responseBody, "$.data");
+        int numberOfElementsInTheDataList = dataList.size();
+        assertEquals(limit, numberOfElementsInTheDataList);
     }
 
     @Test
