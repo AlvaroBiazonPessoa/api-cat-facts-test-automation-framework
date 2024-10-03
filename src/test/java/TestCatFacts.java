@@ -8,6 +8,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TestCatFacts {
 
@@ -43,14 +44,18 @@ public class TestCatFacts {
     @Test
     @DisplayName("Get list of breeds by providing valid authentication credentials")
     public void getListOfBreedsByProvidingValidAuthenticationCredentials() {
-        String emptyBreedList = "";
-        given()
+        int emptyListSize = 0;
+        Response response = (Response) given()
             .header(VALID_AUTHENTICATION_TOKEN_NAME, VALID_AUTHENTICATION_TOKEN_VALUE)
         .when()
             .get(URL_API_CAT_FACTS + ENDPOINT_BREEDS)
         .then()
             .statusCode(HttpStatus.SC_OK)
-            .body("data", not(equalTo(emptyBreedList)));
+            .extract().response();
+        String responseBody = response.getBody().asString();
+        JSONArray dataList = JsonPath.read(responseBody, "$.data");
+        int numberOfElementsInTheDataList = dataList.size();
+        assertNotEquals(emptyListSize, numberOfElementsInTheDataList);
     }
 
     @Test
