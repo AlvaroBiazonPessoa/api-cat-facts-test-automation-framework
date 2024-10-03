@@ -16,6 +16,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
     implementation 'commons-io:commons-io:2.15.1'
     implementation group: 'io.rest-assured', name: 'json-schema-validator', version: '3.0.0'
+    implementation 'com.jayway.jsonpath:json-path:2.7.0'
 }
 
 test {
