@@ -1,5 +1,4 @@
 import com.jayway.jsonpath.JsonPath;
-import io.restassured.internal.common.assertion.Assertion;
 import io.restassured.response.Response;
 import net.minidev.json.JSONArray;
 import org.apache.http.HttpStatus;
